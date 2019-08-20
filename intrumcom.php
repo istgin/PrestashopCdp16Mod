@@ -69,7 +69,7 @@ class Intrumcom extends Module
             $allowedMethods = Array();
             $payment_methods = $this->getPayment();
 
-			$allowed = Array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,27,28,29,30,50,51,52,53,54,55,56,57);
+			$allowed = Array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,27,28,29,30,50,51,52,53,54,55,56,57);
 			foreach($allowed as $status_val) {
                 foreach($payment_methods as $payment) {
                     $allowedMethods[$status_val][] = $payment['id_module'];
@@ -187,7 +187,7 @@ class Intrumcom extends Module
         $methods = Array();
         $payment_methods = $this->getPayment();
         $disabledMethods = unserialize(Configuration::get("INTRUM_DISABLED_METHODS"));
-		$allowed = Array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,27,28,29,30,50,51,52,53,54,55,56,57);
+		$allowed = Array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,27,28,29,30,50,51,52,53,54,55,56,57);
         foreach($allowed as $status_val) {
             $output = '';
             foreach($payment_methods as $payment){
