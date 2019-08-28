@@ -19,6 +19,7 @@ class Intrumcom extends Module
         parent::__construct();
         $this->displayName = $this->l('Intrum CDP');
         $this->description = $this->l('Credit design platform Intrum module');
+		$this->l('Bestellung auf Rechnung nicht verfügbar');
     }
 
     public static function abc()
