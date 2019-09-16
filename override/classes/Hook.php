@@ -374,8 +374,6 @@ class Hook extends HookCore
             return;
         if ($hook_name == 'displayPayment' || $hook_name == 'displayBackOfficeHeader')
         {
-			$moduleInstanceIntrum = Module::getInstanceByName("intrumcom");
-	
             static $disable_non_native_modules = null;
             if ($disable_non_native_modules === null)
                 $disable_non_native_modules = (bool)Configuration::get('PS_DISABLE_NON_NATIVE_MODULE');
@@ -469,6 +467,7 @@ class Hook extends HookCore
 
                 if (($hook_callable || $hook_retro_callable) && Module::preCall($moduleInstance->name)) {
                     $hook_args['altern'] = ++$altern;
+                    $hook_args['intrum_cdp']["forbidden"] = $array["forbidden"];
 
                     if ($use_push && isset($moduleInstance->push_filename) && file_exists($moduleInstance->push_filename))
                         Tools::waitUntilFileIsModified($moduleInstance->push_filename, $moduleInstance->push_time_limit);
@@ -480,8 +479,8 @@ class Hook extends HookCore
                         $display = $moduleInstance->{'hook' . $retro_hook_name}($hook_args);
                     // Live edit
                     if (isset($array["forbidden"]) && $array["forbidden"] == 1) {
-						$display = preg_replace('/<a(.*)href="([^"]*)"(.*)>/','<a$1href="javascript:void(0);"$3>', $display);
-                        $display = "<div style='-webkit-filter: grayscale(100%); -moz-filter: grayscale(100%); -ms-filter: grayscale(100%); -o-filter: grayscale(100%); filter: grayscale(100%);  filter: gray; opacity: 0.3; pointer-events:none'>".$display."</div><div style='text-align:right'>".$moduleInstanceIntrum->l("Bestellung auf Rechnung nicht verfügbar")."</div>";
+                        $display = preg_replace('/<a(.*)href="([^"]*)"(.*)>/','<a$1href="javascript:void(0);"$3>', $display);
+                        $display = "<div style='pointer-events:none'>".$display."</div>";
                     }
                     if (!$array_return && $array['live_edit'] && Tools::isSubmit('live_edit') && Tools::getValue('ad') && Tools::getValue('liveToken') == Tools::getAdminToken('AdminModulesPositions' . (int)Tab::getIdFromClassName('AdminModulesPositions') . (int)Tools::getValue('id_employee'))) {
                         $live_edit = true;
